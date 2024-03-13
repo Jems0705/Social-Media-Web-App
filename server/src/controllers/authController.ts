@@ -27,4 +27,28 @@ const authLogin = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
-export { authLogin };
+// @desc    Sign up user
+// route    GET /auth/sign-up
+// @access  public
+const authSignUp = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { email } = req.body;
+
+        const userExists = await User.findOne({ email });
+
+        if (userExists) {
+            res.status(400);
+            throw new Error("User already exists.");
+        }
+
+        const user = await User.create({ ...req.body });
+
+        console.log("user", user);
+
+        res.json("test");
+    } catch (error) {
+        next(error);
+    }
+};
+
+export { authLogin, authSignUp };
