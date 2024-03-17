@@ -4,9 +4,13 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 // import errorhandler from "errorhandler";
 import { errorHandler, notFound } from "./middleware/errorMiddleware";
-import authRoutes from "./routes/authRoutes";
+
 import connectDB from "./config/db";
 import { protect } from "./middleware/authMiddleware";
+
+// Routes
+import authRoutes from "./routes/authRoutes";
+import userRoutes from "./routes/profileRoutes";
 
 declare global {
     namespace Express {
@@ -38,6 +42,8 @@ app.use("/auth", authRoutes);
 app.get("/users", protect, (req, res) => {
     res.json({ user: req.user });
 });
+
+app.use("/profile", userRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

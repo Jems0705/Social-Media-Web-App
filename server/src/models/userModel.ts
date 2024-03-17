@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 import bcrypt from "bcrypt";
 
 interface IUser {
@@ -6,6 +6,9 @@ interface IUser {
     lastName?: string;
     email: string;
     password: string;
+    profileImage?: string;
+    coverPhoto?: string;
+    bio?: string;
     matchPassword: (inputPassword: string) => boolean;
 }
 
@@ -26,6 +29,17 @@ const userSchema = new mongoose.Schema<IUser>(
         password: {
             type: String,
             required: true,
+        },
+        profileImage: {
+            type: mongoose.Types.ObjectId,
+            ref: "Image",
+        },
+        coverPhoto: {
+            type: mongoose.Types.ObjectId,
+            ref: "Image",
+        },
+        bio: {
+            type: String,
         },
     },
     {

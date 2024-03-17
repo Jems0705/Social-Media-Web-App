@@ -30,7 +30,9 @@ const protect = async (req: Request, res: Response, next: NextFunction) => {
             process.env.ACCESS_TOKEN_SECRET as string
         ) as JWTDecodedValue;
 
-        req.user = await User.findById(decoded.user.id).select("-password");
+        req.user = await User.findById(decoded.user.id).select(
+            "-password -__v"
+        );
 
         next();
     } catch (error) {
